@@ -1,18 +1,23 @@
 module.exports = function check (str = '', bracketsConfig = []) {
     if( str.length % 2 != 0 ) return false;
-    const stack = [];
-    for ( let element of str) {
+    const container = [];
+    let len;
+    let target1;
+    let target2;
+    let last;
+    for ( let element of str ) {
         bracketsConfig.forEach( elem => {
-            let target1 = elem[0];
-            let target2 = elem[1];
-            let last = stack[stack.length-1];
-            if ( element === target2 && stack.length != 0 && last === target1 ) stack.pop(); 
+            target1 = elem[0];
+            target2 = elem[1];
+            len = container.length;
+            last = container[len-1];
+            if ( element === target2 && last === target1 && len != 0 ) container.pop(); 
             else{
-                if ( element === target1 ) stack.push(element);
+                if ( element === target1 ) container.push(element);
             }
         });
     } 
-    return stack.length ? false : true;
+    return container.length ? false : true;
 }
 
 
